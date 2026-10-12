@@ -1,49 +1,69 @@
 import { initialTodos, validationConfig } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
-import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import FormValidator from "../components/FormValidator.js";
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
+// DOM elements
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
+
+// Form validation
 const addTodoFormValidator = new FormValidator(validationConfig, addTodoForm);
 
 addTodoFormValidator.enableValidation();
 
-// Open popup
+// Popup functions
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
+  document.addEventListener("keydown", handleEscape);
 };
 
-// Close popup
 const closeModal = (modal) => {
   modal.classList.remove("popup_visible");
+  document.removeEventListener("keydown", handleEscape);
 };
 
-// Generate a todo using the Todo class
+function handleEscape(evt) {
+  if (evt.key === "Escape") {
+    closeModal(addTodoPopup);
+  }
+}
+
+// Create and render todos
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
   return todo.getView();
 };
 
-// Open the Add Todo popup
+const renderTodo = (data) => {
+  const todoElement = generateTodo(data);
+  todosList.append(todoElement);
+};
+
+// Open popup
 addTodoButton.addEventListener("click", () => {
   openModal(addTodoPopup);
 });
 
-// Close the Add Todo popup
+// Close popup
 addTodoCloseBtn.addEventListener("click", () => {
   closeModal(addTodoPopup);
 });
 
-// Handle new todo submissions
+// Submit new todo
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  const name = evt.target.elements.name.value;
-  const dateInput = evt.target.elements.date.value;
+  // Prevent invalid submissions, including pressing Enter
+  if (!addTodoForm.checkValidity()) {
+    return;
+  }
+
+  const name = addTodoForm.elements.name.value;
+  const dateInput = addTodoForm.elements.date.value;
 
   let date = null;
 
@@ -54,20 +74,18 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const values = {
     id: uuidv4(),
-    name: name,
-    date: date,
+    name,
+    date,
     completed: false,
   };
 
-  const todo = generateTodo(values);
-  todosList.append(todo);
+  renderTodo(values);
 
   addTodoFormValidator.resetValidation();
   closeModal(addTodoPopup);
 });
 
-// Display initial todos
+// Render initial todos
 initialTodos.forEach((item) => {
-  const todo = generateTodo(item);
-  todosList.append(todo);
+  renderTodo(item);
 });
