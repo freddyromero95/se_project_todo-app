@@ -12,25 +12,30 @@ const todosList = document.querySelector(".todos__list");
 
 // Form validation
 const addTodoFormValidator = new FormValidator(validationConfig, addTodoForm);
-
 addTodoFormValidator.enableValidation();
 
-// Popup functions
+// Close popup when Escape is pressed
+function handleEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_visible");
+
+    if (openedPopup) {
+      closeModal(openedPopup);
+    }
+  }
+}
+
+// Open popup
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
   document.addEventListener("keydown", handleEscape);
 };
 
+// Close popup
 const closeModal = (modal) => {
   modal.classList.remove("popup_visible");
   document.removeEventListener("keydown", handleEscape);
 };
-
-function handleEscape(evt) {
-  if (evt.key === "Escape") {
-    closeModal(addTodoPopup);
-  }
-}
 
 // Create and render todos
 const generateTodo = (data) => {
@@ -43,12 +48,12 @@ const renderTodo = (data) => {
   todosList.append(todoElement);
 };
 
-// Open popup
+// Open popup button
 addTodoButton.addEventListener("click", () => {
   openModal(addTodoPopup);
 });
 
-// Close popup
+// Close popup button
 addTodoCloseBtn.addEventListener("click", () => {
   closeModal(addTodoPopup);
 });
@@ -57,7 +62,6 @@ addTodoCloseBtn.addEventListener("click", () => {
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  // Prevent invalid submissions, including pressing Enter
   if (!addTodoForm.checkValidity()) {
     return;
   }
