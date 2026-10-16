@@ -1,7 +1,9 @@
 export default class Todo {
-  constructor(data, selector) {
+  constructor(data, selector, handleCompletedChange, handleDelete) {
     this._data = data;
     this._selector = selector;
+    this._handleCompletedChange = handleCompletedChange;
+    this._handleDelete = handleDelete;
   }
 
   _getTemplate() {
@@ -18,14 +20,14 @@ export default class Todo {
 
     const todoCheckbox = this._element.querySelector(".todo__completed");
 
-    // Delete the todo when the delete button is clicked
     todoDeleteBtn.addEventListener("click", () => {
       this._element.remove();
+      this._handleDelete(this._data.completed);
     });
 
-    // Update the completed status when checkbox changes
     todoCheckbox.addEventListener("change", () => {
       this._data.completed = todoCheckbox.checked;
+      this._handleCompletedChange(todoCheckbox.checked);
     });
   }
 

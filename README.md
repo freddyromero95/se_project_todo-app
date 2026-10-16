@@ -2,15 +2,11 @@
 
 ## Project Description
 
-The Simple ToDo App is an interactive task management
-application built as part of TripleTen's Software
-Engineering program.
+The Simple ToDo App is an interactive task management application built as part of TripleTen's Software Engineering program.
 
-Users can create, complete, and delete tasks through
-a simple and responsive interface.
+Users can create, complete, and delete tasks through a simple and responsive interface.
 
-The application uses JavaScript classes to organize
-todo creation and form validation.
+The application uses JavaScript classes and object-oriented programming principles to organize task management, popup interactions, and form validation.
 
 ## Features
 
@@ -21,7 +17,8 @@ todo creation and form validation.
 - Submit tasks using the Enter key
 - Mark tasks as completed or uncompleted
 - Delete tasks from the list
-- Close the popup using the Escape key
+- Track total and completed tasks with a dynamic counter
+- Close the popup using the close button, Escape key, or overlay
 
 ## Technologies Used
 
@@ -38,12 +35,16 @@ todo creation and form validation.
 
 ## Project Structure
 
-- `components/Todo.js` - Creates and manages todo items
-- `components/FormValidator.js` - Handles form validation
-- `pages/index.js` - Main application logic
-- `utils/constants.js` - Initial todos and validation settings
-- `blocks/` - CSS styles organized using BEM
-- `index.html` - Main HTML structure
+- `components/Todo.js` — Creates and manages individual todo items
+- `components/FormValidator.js` — Handles form validation
+- `components/Section.js` — Renders todo items in the list
+- `components/Popup.js` — Manages popup opening and closing
+- `components/PopupWithForm.js` — Handles popup form submissions
+- `components/TodoCounter.js` — Tracks total and completed tasks
+- `pages/index.js` — Main application logic
+- `utils/constants.js` — Initial todos and validation settings
+- `blocks/` — CSS styles organized using BEM
+- `index.html` — Main HTML structure
 
 ## Live Demo
 
@@ -57,4 +58,4 @@ https://github.com/freddyromero95/se_project_todo-app
 
 Freddy Romero
 
-Created for TripleTen Software Engineering - Project 7.
+Created for TripleTen Software Engineering — Project 8.
