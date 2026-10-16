@@ -60,14 +60,14 @@ const addTodoPopupWithForm = new PopupWithForm(
       date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     }
 
-    const values = {
+    const todoData = {
       id: uuidv4(),
       name,
       date,
       completed: false,
     };
 
-    renderTodo(values);
+    renderTodo(todoData);
     todoCounter.updateTotal(true);
 
     addTodoFormValidator.resetValidation();
